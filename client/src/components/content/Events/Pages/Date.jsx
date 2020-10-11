@@ -30,5 +30,3 @@ const Date = (props) => {
     )
 }
 export default Date;
-
-//планирование реусров
