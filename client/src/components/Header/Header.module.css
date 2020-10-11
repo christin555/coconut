@@ -1,0 +1,23 @@
+.menu {
+    position: fixed;
+    background: rgba(210, 224, 236, 0.41);
+    width: 10%;
+    height: 100vh;
+}
+
+.divider {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid lightgrey;
+    height: 3px;
+    margin-top: 2px;
+}
+
+.menuBlock {
+    padding: 10px;
+}
+
+.title {
+    text-transform: uppercase;
+    font-weight: bold;
+}

@@ -1,0 +1,7 @@
+.middle {
+    margin: 0 calc(50% - 61% / 2);
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: 6fr 3fr;
+    grid-template-areas: "lenta navBar"
+}
