@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
 
-
 const Title = (props) => {
     const fields = ['Start Date', 'C1 Date', 'C+1 Date', 'Finish Date'].map(el => (
             <div className={styles.field}>
