@@ -1,6 +1,5 @@
-const express = require('express');
-
-const router = express.Router();
+const router = require('express-promise-router')();
+const usersController = require('../controllers/users.controller');
 
 router.get('/api', (req, res) => {
     res.status(200).send({
@@ -9,5 +8,7 @@ router.get('/api', (req, res) => {
         version: '1.0.0',
     });
 });
+
+router.get('/users/getUser/:id', usersController.getUser);
 
 module.exports = router;
