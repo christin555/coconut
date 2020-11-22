@@ -11,7 +11,7 @@ exports.up = async (knex) => {
         table.string("lastName")
             .notNullable();
         table.string("about");
-        table.integer("countryId");
+        table.string("country");
         table.string("email")
             .notNullable()
             .unique();
@@ -77,11 +77,6 @@ exports.up = async (knex) => {
             .primary();
         table.string("name");
     });
-    await knex.schema.createTable("countries", table => {
-        table.increments("id")
-            .primary();
-        table.string("name");
-    });
 };
 
 exports.down = function (knex) {
@@ -91,7 +86,6 @@ exports.down = function (knex) {
         knex.schema.dropTable('eventsParticipants'),
         knex.schema.dropTable('documents'),
         knex.schema.dropTable('documentsSigned'),
-        knex.schema.dropTable('roles'),
-        knex.schema.dropTable('countries'),
+        knex.schema.dropTable('roles')
     ]);
 };

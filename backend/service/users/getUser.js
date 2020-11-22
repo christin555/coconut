@@ -1,20 +1,19 @@
 module.exports = {
     getUser: ({params, knex}) => {
         const {id} = params;
-
         return knex("users")
             .first([
                 'users.id',
                 'firstName',
+                'lastName',
                 'secondName',
                 'email',
                 'about',
-                'countries.name as country',
-                'photoPath as photo'
+                'country',
+                'photoPath',
+                'isAdmin'
             ])
-            .leftJoin('countries', 'countries.id', 'countryId')
             .where('users.id', id);
-
 
     }
 };

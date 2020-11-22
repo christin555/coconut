@@ -10,8 +10,9 @@
   .content {
     display: grid;
     grid-gap: 30px;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 3fr;
     height: max-content;
+    margin-right: 50px;
   }
 
   .table {
@@ -44,7 +45,7 @@
   .field {
     display: grid;
     line-height: 3;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 3fr;
 
     & > *:last-child {
       margin-left: 40px;
@@ -70,8 +71,8 @@
     }
 
     & > img {
-      width: 150px;
-      height: 150px;
+      width: 100%;
+
       margin-bottom: 20px;
     }
   }

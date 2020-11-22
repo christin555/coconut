@@ -1,17 +1,18 @@
 import React from 'react';
 import styles from './Home.module.css';
 import {inject, observer} from 'mobx-react';
+import {toJS} from 'mobx';
 
-@inject(stores => ({
-        user: stores.userStore.user
+@inject(({userStore}) => ({
+        user: toJS(userStore.user)
     })
 )
 @observer class Home extends React.Component{
     render() {
-        const {user} =this.props;
+
         return (
             <div className={styles.middle}>
-                хоме {user}
+                хоме
             </div>
         );
     }

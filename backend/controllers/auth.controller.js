@@ -1,5 +1,5 @@
+const {verifyPassword, findOneByEmail, hashPassword} = require("../auth");
 const knex = require("../knex/index");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {secretKey} = require('../config');
 const {getUser} = require('../service');
@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
         lastName,
         email,
         password,
-        countryId,
+        country,
         about,
         photoPath
     } = req.body;
@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
         secondName,
         lastName,
         email,
-        countryId,
+        country,
         about,
         photoPath
     };
@@ -63,13 +63,24 @@ exports.login = async (req, res) => {
     } = req.body;
 
     if (!password || !email) {
-        return res.status(400);
+        res.status(400).json('Error');
+        return res;
     }
 
     const user = await findOneByEmail(email)
         .then(async (result) => {
             const isVerified = await verifyPassword(password, result.password);
-            return {isVerified, id: result.id};
+            if (isVerified) {
+                const response = await getUser({params: {id: result.id}, knex});
+                console.log(2);
+                response.token = jwt.sign({id: result.id}, secretKey, {expiresIn: '24h'});
+                res.status(200).json(response);
+            } else {
+                res.status(400).json({
+                    message: "Auth is failed"
+                });
+            }
+
         }
         )
         .catch((err) =>
@@ -77,66 +88,6 @@ exports.login = async (req, res) => {
                 message: err
             })
         );
-    if (user.isVerified) {
-        const response = await getUser({params: {id: user.id}, knex});
-        response.token = jwt.sign({id: user.id}, secretKey, {expiresIn: '24h'});
-        res.status(200).json(response);
-    } else
-        res.status(400).json({
-            message: "Auth is failed"
-        });
+    return res;
 };
 
-
-const hashPassword = (password) => {
-    return new Promise(function (resolve, reject) {
-        bcrypt.genSalt(10, function (err, salt) {
-            if (err) {
-                reject(err);
-            } else {
-                bcrypt.hash(password, salt, function (err, hash) {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(hash);
-                    }
-                });
-            }
-        });
-    });
-};
-
-const findOneByEmail = (email) => {
-    return new Promise(function (resolve, reject) {
-        knex("users").first(["password", "id"]).where("email", email)
-            .then((result) => {
-                if (result) {
-                    resolve(result);
-                } else {
-                    reject("no user found");
-                }
-            })
-            .catch(err => reject(err));
-    });
-};
-
-const verifyPassword = (password, hashedPassword) => {
-    return new Promise(function (resolve, reject) {
-        bcrypt.compare(password, hashedPassword, (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
-        });
-    });
-};
-
-const verifyToken = (req, res, next) => {
-    const bearerHeader = req.headers['authToken'];
-    if(typeof bearerHeader !=='undefined'){
-
-    } else {
-        res.sendStatus(403);
-    }
-};

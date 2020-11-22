@@ -1,5 +1,5 @@
 const router = require('express-promise-router')();
-const usersController = require('../controllers/users.controller');
+const apiController = require('../controllers/api.controller');
 
 router.get('/api', (req, res) => {
     res.status(200).send({
@@ -9,6 +9,10 @@ router.get('/api', (req, res) => {
     });
 });
 
-router.get('/users/getUser/:id', usersController.getUser);
+router.get('/users/getUser/:id', apiController.getUser);
+router.get('/users/getCurrentUser', apiController.getCurrentUser);
+router.put('/users/editUser', apiController.editUser);
+
+router.post('/events/create', apiController.createEvent);
 
 module.exports = router;
