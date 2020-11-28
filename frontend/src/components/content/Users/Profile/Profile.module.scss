@@ -42,19 +42,30 @@
     }
   }
 
+  .left {
+    width: 70%;
+  }
+
   .field {
     display: grid;
     line-height: 3;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 2fr 2fr;
+    margin-top: 10px;
 
+
+    input {
+      height: 30px;
+    }
     & > *:last-child {
-      margin-left: 40px;
+      margin-left: 70px;
+
     }
 
   }
 
   .buttons {
     float: right;
+    margin-top: 10px;
 
     & > * {
       margin: 10px;

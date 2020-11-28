@@ -41,12 +41,15 @@ exports.up = async (knex) => {
     await knex.schema.createTable("eventsParticipants", table => {
         table.integer("userId")
             .comment("Идентификатор пользователя");
+        table.integer("eventId")
+            .comment("Идентификатор роли");
         table.integer("roleId")
             .comment("Идентификатор роли");
         table.integer("isAssigned")
             .comment("Роль потверждена администратором");
-        table.primary(["userId", "roleId"]);
+        table.primary(["eventId", "userId"]);
         table.index("userId");
+        table.index(["eventId", "userId"]);
     });
     await knex.schema.createTable("documents", table => {
         table.increments("id")

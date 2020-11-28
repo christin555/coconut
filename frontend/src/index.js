@@ -14,28 +14,31 @@ import ProfileLogin from "./components/content/Users/Profile/Pages/Login";
 import ProfileProfile from "./components/content/Users/Profile/Pages/Profile";
 import ProfilePin from "./components/content/Users/Profile/Pages/Pin";
 import UsersAssign from "./components/content/Users/UsersAssign";
+
 import EventsList from "./components/content/Events/EventsList";
 import EventsCreate from "./components/content/Events/EventsCreate";
-import EventView from "./components/content/Events/EventView";
+import Event from "./components/content/Events/Event";
 
 import UserStore from "./store/UserStore";
 import AuthStore from "./store/AuthStore";
 
+import {isAuthenticated}  from './utils/AUTH';
+
 const authStore  = new AuthStore();
 const userStore = new UserStore(authStore);
 const stores = { userStore, authStore };
-const isAuth = localStorage.token;
+
 
 ReactDOM.render(
     <BrowserRouter>
         <React.StrictMode>
           <Provider { ...stores } >
-                {!isAuth && <React.Fragment>
+                {!isAuthenticated() && <React.Fragment>
                         <Route exact path='/login' component={Login}/>
                         <Route exact path='/registration' component={Registration}/>
                 </React.Fragment>
                 }
-              {isAuth
+              {isAuthenticated()
               && <div className="App">
                       <Header/>
                       <div className='content'>
@@ -49,7 +52,7 @@ ReactDOM.render(
 
                           <Route exact path='/events/browse' component={EventsList}/>
                           <Route exact path='/events/create' component={EventsCreate}/>
-                          <Route exact path='/event/view' component={EventView}/>
+                          <Route exact path='/event/:id' component={Event}/>
 
                       </div>
                   </div>

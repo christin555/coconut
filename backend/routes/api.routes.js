@@ -13,6 +13,7 @@ router.get('/users/getUser/:id', apiController.getUser);
 router.get('/users/getCurrentUser', apiController.getCurrentUser);
 router.put('/users/editUser', apiController.editUser);
 
-router.post('/events/create', apiController.createEvent);
+router.put('/events/create', apiController.createEvent);
+router.get('/events', apiController.getEvents);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 import {action, autorun, makeObservable, toJS, observable} from 'mobx';
 import API from "./../utils/API";
+import jwt_decode from 'jwt-decode';
 
 class UserStore {
     user = {};
@@ -52,17 +53,14 @@ class UserStore {
     }
 
     setUserField(field, value){
-
         this.user[field] = value;
     }
 
     setField(field, value){
-
         this[field] = value;
     }
 
     setFields(data){
-
         Object.entries(data).map(([key, value]) => {
             this[key] = value;
             }

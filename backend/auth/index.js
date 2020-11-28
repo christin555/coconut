@@ -1,23 +1,23 @@
 const jwt = require("jsonwebtoken");
 const {secretKey} = require('../config');
 const bcrypt = require("bcrypt");
+const knex = require("../knex/index");
 
 exports.verifyToken = async(req, res, next) => {
     const bearerHeader = req.headers['authorization'];
 
     if(typeof bearerHeader !=='undefined'){
         const token = bearerHeader.split(' ');
+
         jwt.verify(token[1], secretKey,(err) =>
         {
             if (err) {
-
-                res.sendStatus(400);
+                res.sendStatus(401);
             }
             else next();
         });
 
     } else {
-
         res.sendStatus(403);
     }
 };

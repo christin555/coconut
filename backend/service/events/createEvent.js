@@ -2,12 +2,13 @@ const {getCurrentUser} = require("../users/getCurrentUser");
 
 module.exports = {
     createEvent: async({params, knex}) => {
+        console.log(params);
         const response = {};
         const {
-            C_1Date,
-            C1Date,
+            c_1Date:C_1Date,
+            c1Date: C1Date,
             finishDate,
-            name,
+            title: name,
             photoPath,
             startDate
         } = params.body;
@@ -27,13 +28,7 @@ module.exports = {
                     console.log(error);
                     response.status = 500;
                     response.message = error;
-                })
-                .then(()=> {
-                    response.status = 200;
-                    response.message = 'succes';
-                }
-                );
-
+                });
         } else {
             response.status = 401;
             response.message = 'Access denied';

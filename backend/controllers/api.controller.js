@@ -3,7 +3,8 @@ const {
     getUser,
     getCurrentUser,
     editUser,
-    createEvent
+    createEvent,
+    getEvents
 } = require('../service');
 
 const promiseFn = (fn, res, params) => new Promise((resolve) => fn(params).then((data)=>
@@ -21,4 +22,5 @@ module.exports = {
     editUser: (params, res) => promiseFn(editUser,res,{params, knex}),
 
     createEvent: (params, res) => promiseFn(createEvent,res,{params, knex}),
+    getEvents: (params, res) => promiseFn(getEvents,res, {params, knex})
 };

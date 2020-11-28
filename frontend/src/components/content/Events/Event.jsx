@@ -1,20 +1,20 @@
 import React from 'react';
 import {Provider} from "mobx-react";
 import EventStore from "../../../store/EventStore";
-import EventsListView from "./EventsListView";
+import EventView from "./EventView";
 
-class EventsList extends React.Component {
+class Event extends React.Component {
   constructor() {
     super();
     this.EventStore = new EventStore();
-}
+  }
   render(){
     return(
         <Provider EventStore = {this.EventStore} >
-          <EventsListView/>
+          <EventView/>
         </Provider>
     )
   }
 }
 
-export default EventsList;
+export default Event;
