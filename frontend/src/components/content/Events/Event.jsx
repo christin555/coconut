@@ -4,9 +4,10 @@ import EventStore from "../../../store/EventStore";
 import EventView from "./EventView";
 
 class Event extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.EventStore = new EventStore();
+    this.EventStore.getEvent(props.match.params.id);
   }
   render(){
     return(

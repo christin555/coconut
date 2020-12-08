@@ -33,32 +33,36 @@ exports.up = async (knex) => {
         table.date("finishDate")
             .notNullable();
         table.date("C1Date");
-        table.date("C+1Date");
+        table.date("C_1Date");
         table.string("photoPath");
         table.timestamp("deleted_at");
         table.timestamps();
     });
     await knex.schema.createTable("eventsParticipants", table => {
+        table
+            .increments("id")
+            .primary();
         table.integer("userId")
             .comment("Идентификатор пользователя");
         table.integer("eventId")
             .comment("Идентификатор роли");
         table.integer("roleId")
             .comment("Идентификатор роли");
-        table.integer("isAssigned")
+        table.boolean("isAssigned")
             .comment("Роль потверждена администратором");
-        table.primary(["eventId", "userId"]);
         table.index("userId");
         table.index(["eventId", "userId"]);
     });
     await knex.schema.createTable("documents", table => {
         table.increments("id")
             .primary();
-        table.integer("name")
+        table.string("name")
             .notNullable();
-        table.integer("content")
+        table.string("content")
             .notNullable();
         table.integer("eventId")
+            .notNullable();
+        table.string("day")
             .notNullable();
         table
             .integer("roleId")
@@ -80,6 +84,9 @@ exports.up = async (knex) => {
             .primary();
         table.string("name");
     });
+
+    await knex('roles')
+        .insert([{name:'Experts'}, {name: 'Participants'}]);
 };
 
 exports.down = function (knex) {

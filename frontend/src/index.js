@@ -18,31 +18,45 @@ import UsersAssign from "./components/content/Users/UsersAssign";
 import EventsList from "./components/content/Events/EventsList";
 import EventsCreate from "./components/content/Events/EventsCreate";
 import Event from "./components/content/Events/Event";
+import Date from "./components/content/Events/Pages/Date";
+import Title from "./components/content/Events/Pages/Title";
+import DocumentsView from "./components/content/Documents/DocumentsView";
+import DocumentView from "./components/content/Documents/DocumentView";
+import DocumentCreate from "./components/content/Documents/DocumentCreate";
 
 import UserStore from "./store/UserStore";
+import EventStore from "./store/EventStore";
 import AuthStore from "./store/AuthStore";
+import DocumentStore from "./store/DocumentStore";
 
 import {isAuthenticated}  from './utils/AUTH';
 
+
 const authStore  = new AuthStore();
 const userStore = new UserStore(authStore);
-const stores = { userStore, authStore };
+const eventStore = new EventStore();
+const documentStore = new  DocumentStore();
+const stores = { userStore, authStore, eventStore, documentStore };
 
 
 ReactDOM.render(
     <BrowserRouter>
         <React.StrictMode>
           <Provider { ...stores } >
-                {!isAuthenticated() && <React.Fragment>
+                {
+                    !isAuthenticated()
+                    && <React.Fragment>
+                         <Route exact path='/' component={Login}/>
                         <Route exact path='/login' component={Login}/>
                         <Route exact path='/registration' component={Registration}/>
                 </React.Fragment>
                 }
-              {isAuthenticated()
-              && <div className="App">
+              {
+                  isAuthenticated()
+                  && <div className="App">
                       <Header/>
                       <div className='content'>
-                          <Route exact path='/' component={Home}/>
+                          <Route exact path='/' component={ProfileMain}/>
                           <Route exact path='/my/profile' component={ProfileMain}/>
                           <Route exact path='/my/profile/login' component={ProfileLogin}/>
                           <Route exact path='/my/profile/profile' component={ProfileProfile}/>
@@ -52,8 +66,13 @@ ReactDOM.render(
 
                           <Route exact path='/events/browse' component={EventsList}/>
                           <Route exact path='/events/create' component={EventsCreate}/>
-                          <Route exact path='/event/:id' component={Event}/>
 
+                          <Route exact path='/event/:id' component={Event}/>
+                          <Route exact path='/event/:id/title' component={Title}/>
+                          <Route exact path='/event/:id/date' component={Date}/>
+                          <Route exact path='/event/:id/documents' component={DocumentsView}/>
+                          <Route exact path='/event/:id/documents/create' component={DocumentCreate}/>
+                          <Route exact path='/document/:id' component={DocumentView}/>
                       </div>
                   </div>
               }

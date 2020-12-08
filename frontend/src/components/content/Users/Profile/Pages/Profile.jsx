@@ -67,7 +67,6 @@ import {inject, observer} from 'mobx-react';
     return (
         <div className={styles.page}>
           <div className={styles.pageTitle}> Change user info</div>
-
           <div className={styles.content}>
             <div className={styles.right}>
               <div className={styles.imgLoader}>
@@ -81,6 +80,7 @@ import {inject, observer} from 'mobx-react';
                         setField('photoPath',null);
                         editUser();
                     }}
+                    canUpdate={true}
                 />
               </div>
             </div>

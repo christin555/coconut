@@ -2,19 +2,22 @@ const {getCurrentUser} = require("../users/getCurrentUser");
 
 module.exports = {
     getEvents: async({params, knex}) => {
-
-        const {isAdmin} = await getCurrentUser({params, knex});
-        return knex("events")
-            .select(knex.raw(`id, name, "startDate", "finishDate", (SELECT count(id) FROM "eventsParticipants"  
-            WHERE "eventsParticipants"."eventId" = events.id) 
+        const user = await getCurrentUser({params, knex});
+        if (user.isAdmin) {
+            return knex("events")
+                .select(knex.raw(`id, name, "startDate", "finishDate", (SELECT count("eventId") FROM "eventsParticipants"  
+            WHERE "eventsParticipants"."eventId" = events.id group by "events"."id") 
             AS "countMembers"`))
-            .groupBy('id')
-            .catch(error => {
-                console.log(error);
-                return {
-                    status:500,
-                    message: error
-                };
-            });
+                .groupBy('id');
+
+        } else return knex("events")
+            .select(knex.raw(`events.id, events.name, "startDate", "roles"."name" as "myRole", "finishDate",  
+            (SELECT count("eventId") FROM "eventsParticipants"  
+            WHERE "eventsParticipants"."eventId" = events.id group by "events"."id") 
+            AS "countMembers"`))
+            .innerJoin(knex.raw(`"eventsParticipants" on "eventsParticipants"."userId" = ${user.id} and "eventId" = "events"."id"`))
+            .innerJoin('roles', 'roles.id', 'eventsParticipants.roleId')
+            .groupBy(['events.id', 'roles.name']);
     }
+
 };

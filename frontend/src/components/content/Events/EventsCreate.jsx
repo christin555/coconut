@@ -8,7 +8,6 @@ class EventsCreate extends React.Component {
         super();
         this.EventStore = new EventStore();
     }
-
     render(){
         return(
             <Provider EventStore = {this.EventStore} >

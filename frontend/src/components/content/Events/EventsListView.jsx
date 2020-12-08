@@ -13,24 +13,27 @@ import {inject, observer} from 'mobx-react';
 import {toJS} from "mobx";
 import dayjs from 'dayjs';
 
-@inject(({EventStore}) => ({
-  events:  toJS(EventStore.events)
+@inject(({EventStore, userStore}) => ({
+  events:  toJS(EventStore.events),
+  user: toJS(userStore.user),
 }))
 @observer class EventsListView extends React.Component {
 
   render() {
-
-    console.log(this.props.events);
+    const {user} = this.props;
     const events = this.props.events.map(element => {
       return(
           <TableRow>
             <TableCell>
-              {element.name}
+                <NavLink to={`/event/${element.id}`}>
+                    {element.name}
+                </NavLink>
             </TableCell>
             <TableCell>
               {dayjs(element.startDate).format('DD/MM/YYYY')} - {dayjs(element.finishDate).format('DD/MM/YYYY')}
             </TableCell>
             <TableCell >{element.countMembers > 0 ? element.countMembers : '-' }</TableCell>
+              { !user.isAdmin && <TableCell> {element.myRole} </TableCell>}
           </TableRow>
       )
     });
@@ -45,9 +48,10 @@ import dayjs from 'dayjs';
               <Table className={styles.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="right">Event</TableCell>
-                    <TableCell align="right">Date</TableCell>
-                    <TableCell align="right">Participants</TableCell>
+                    <TableCell>Event</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Participants</TableCell>
+                      { !user.isAdmin && <TableCell>My role</TableCell>}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -55,11 +59,17 @@ import dayjs from 'dayjs';
                 </TableBody>
               </Table>
             </TableContainer>
-            <div className={styles.button}>
-              <NavLink to="/events/create">
-                <Button variant="contained" size="small" color="primary"> Add </Button>
-              </NavLink>
-            </div>
+              {user.isAdmin && <div className={styles.button}>
+                  <NavLink to="/events/create">
+                      <Button
+                          variant="contained"
+                          size="small"
+                          color="primary">
+                          Add
+                      </Button>
+                  </NavLink>
+              </div>
+              }
           </div>
         </div>
     );

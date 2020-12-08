@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { NavLink } from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import styles from '../Users/Profile/Profile.module.scss';
 import {inject, observer} from 'mobx-react';
 import UpWidget from "../../shared/upWidget";
@@ -11,11 +11,12 @@ import UpWidget from "../../shared/upWidget";
     startDate:  EventStore.event.startDate,
     c1Date:  EventStore.event.c1Date,
     c_1Date:  EventStore.event.c_1Date,
-    finishDate:  EventStore.event.startDate,
+    finishDate:  EventStore.event.finishDate,
     setField: EventStore.setField,
     create: EventStore.create,
-    photoPath: EventStore.event.photoPath
-    }))
+    photoPath: EventStore.event.photoPath,
+    status: EventStore.status,
+}))
 @observer class EventsCreateView extends React.Component  {
 
  render() {
@@ -27,8 +28,11 @@ import UpWidget from "../../shared/upWidget";
      finishDate,
      setField,
      create,
-     photoPath
+     photoPath,
+     status
    } = this.props;
+
+   if(status === "success") return (<Redirect to="/events/browse"/>);
 
    const fields = [
      {
@@ -71,7 +75,7 @@ import UpWidget from "../../shared/upWidget";
 
    return (
        <div className={styles.page}>
-         <div className={styles.pageTitle}> Change password</div>
+         <div className={styles.pageTitle}> Create event</div>
          <div className={styles.content}>
            <div className={styles.right}>
              <div className={styles.imgLoader}>

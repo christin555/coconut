@@ -14,6 +14,16 @@
     grid-gap: 30px;
     grid-template-columns: 3fr 6fr;
     height: max-content;
+
+    .buttons {
+      float: right;
+      margin-top: 20px;
+
+      & > * {
+        margin-right: 10px;
+      }
+    }
+
   }
 
   .field {

@@ -52,6 +52,7 @@ import UpWidget from "../../../shared/upWidget";
                           setField('photoPath',null);
                           editUser();
                       }}
+                      canUpdate={true}
                   />
               </div>
             </div>
@@ -90,7 +91,6 @@ import UpWidget from "../../../shared/upWidget";
                   <span>PIN: {id}</span>
                   <Button> SET PIN</Button>
                 </div>
-
               </div>
             </div>
           </div>

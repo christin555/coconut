@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import React from "react";
 import UserImg from "../../assets/img/user.jpg";
 
-const UpWidget = ({funcUpload, funcDelete, photoPath}) => {
+const UpWidget = ({funcUpload, funcDelete, photoPath, canUpdate}) => {
     const showWidget = () => {
 
         let widget = window.cloudinary.createUploadWidget(
@@ -20,7 +20,9 @@ const UpWidget = ({funcUpload, funcDelete, photoPath}) => {
     return(
        <React.Fragment>
            <img src={photoPath || UserImg} />
-           <Button
+           {
+               canUpdate && <React.Fragment>
+                   <Button
                size="small"
                variant="contained"
                color="primary"
@@ -28,13 +30,15 @@ const UpWidget = ({funcUpload, funcDelete, photoPath}) => {
            >
                Upload
            </Button>
-           <Button
+               <Button
                size="small"
                variant="contained"
                color="primary"
                onClick={funcDelete}
-           > Delete
-           </Button>
+               > Delete
+               </Button>
+               </React.Fragment>
+           }
        </React.Fragment>
     )
 };

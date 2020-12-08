@@ -1,31 +1,30 @@
-import {autorun, makeObservable, action, observable} from 'mobx';
+import {autorun, computed, makeObservable, action, observable} from 'mobx';
 import AUTH from "./../utils/AUTH";
+import UserStore from "./UserStore";
 
-class AuthStore {
+class AuthStore extends UserStore {
     password =''
-    email =''
-    firstName=''
-    secondName=''
-    lastName=''
-    country=''
-    repeatPassword=''
     loginSuccess = false
+
     constructor() {
+        super();
+
         makeObservable(this, {
             password: observable,
-            email:observable,
-            firstName:observable,
-            secondName:observable,
-            lastName:observable,
-            country:observable,
-            repeatPassword:observable,
             loginSuccess:observable,
-            setField: action.bound
+            setField: action.bound,
+            checkPass: action.bound,
         })
     }
 
     setField(field, value){
         this[field] = value;
+    }
+
+      checkPass(){
+        console.log(this.isCheckedPass);
+        if(this.password === this.repeatPassword) this.isCheckedPass = true;
+        else this.isCheckedPass = false;
     }
 
     login = async () => {
@@ -34,6 +33,24 @@ class AuthStore {
             email: this.email
         }).then(res => {
             localStorage.setItem("token", res.data.token);
+            this.loginSuccess = true;
+        });
+    }
+
+    auth = async () => {
+       if(this.isCheckedPass)
+        await AUTH.post('register', {
+            password: this.password,
+            email: this.email,
+            photoPath: this.photoPath,
+            firstName: this.firstName,
+            secondName: this.secondName,
+            lastName: this.lastName,
+            country: this.country,
+            about: this.about
+        }).then(res => {
+            console.log(res);
+            localStorage.setItem("token", res.data.user.token);
             this.loginSuccess = true;
         });
     }

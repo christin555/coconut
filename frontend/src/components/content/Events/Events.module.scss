@@ -8,10 +8,37 @@
   }
 
   .content {
+
+    .field {
+      display: grid;
+      line-height: 3;
+      grid-template-columns: 2fr 2fr;
+      margin-top: 10px;
+
+
+      input {
+        height: 30px;
+      }
+      & > *:last-child {
+        margin-left: 70px;
+
+      }
+
+    }
+    .buttons {
+      float: right;
+      margin-top: 10px;
+
+      & > * {
+        margin: 10px;
+      }
+    }
+
     .tableContainer {
       margin-bottom: 20px;
 
       .table {
+        text-align: right;
         min-width: 900px;
       }
     }

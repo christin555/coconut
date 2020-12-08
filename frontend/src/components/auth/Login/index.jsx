@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import styles from './Login.module.scss';
 import {inject, observer} from 'mobx-react';
-import {Redirect} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 
 @inject(stores => ({
     login: stores.authStore.login,
@@ -46,7 +46,9 @@ import {Redirect} from "react-router-dom";
                 {fields}
                 <div className={styles.buttons}>
                     <Button onClick={login} variant="contained" color="primary">Sign in</Button>
-                    <Button variant="contained" color="primary">Sign up</Button>
+                    <NavLink to="/registration">
+                        <Button variant="contained" color="primary">Sign up</Button>
+                    </NavLink>
                 </div>
             </div>
         );

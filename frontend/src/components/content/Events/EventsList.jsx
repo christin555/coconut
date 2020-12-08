@@ -7,6 +7,7 @@ class EventsList extends React.Component {
   constructor() {
     super();
     this.EventStore = new EventStore();
+    this.EventStore.getEvents();
 }
   render(){
     return(

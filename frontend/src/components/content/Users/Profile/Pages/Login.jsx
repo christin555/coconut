@@ -18,7 +18,6 @@ import {toJS} from "mobx";
 )
 @observer class Login extends React.Component {
     render() {
-
         const {
             oldPassword,
             newPassword,
@@ -28,7 +27,6 @@ import {toJS} from "mobx";
             isCheckedPass,
             editUser
         } = this.props;
-        console.log(isCheckedPass);
         const fields = [
             {
                 label: 'Current',

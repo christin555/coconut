@@ -49,6 +49,7 @@ class UserStore {
     getUser = async ()=>{
         await API.get('users/getCurrentUser', ).then(res => {
             this.setFields(res.data);
+            this.user = res.data;
         });
     }
 

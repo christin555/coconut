@@ -54,6 +54,8 @@ exports.register = async (req, res) => {
                 message: error.code === "23505" ? "Email is exist!" : "Error!"
             });
         });
+
+
 };
 
 exports.login = async (req, res) => {
