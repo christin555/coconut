@@ -1,4 +1,6 @@
-   https://docs.google.com/document/d/1mbWOHKd_999cv3H9WcqcB7iBGInZbHKgQZ7rZBAGg_s/editЧто сделано на текущий день:
+   https://docs.google.com/document/d/1mbWOHKd_999cv3H9WcqcB7iBGInZbHKgQZ7rZBAGg_s/edit  
+
+Что сделано на текущий день:
    
    
     - верстка всех страниц
